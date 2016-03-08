@@ -3,6 +3,8 @@
 # tailor
 Tailor buttons to any Android EditText. Written in Kotlin.
 
+![Demo](tailor-demo.gif)
+
 ## Import
 tailor is hosted on JitPack. Therefore you can simply import it by adding
 
