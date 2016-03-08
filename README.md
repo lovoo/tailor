@@ -1,8 +1,10 @@
+[![Release](https://jitpack.io/v/User/Repo.svg)](https://jitpack.io/#lovoo/tailor)
+
 # tailor
 Tailor buttons to any Android EditText. Written in Kotlin.
 
 ## Import
-tailor is hosted on jitpack.io. Therefore you can simply import it by adding
+tailor is hosted on JitPack. Therefore you can simply import it by adding
 
 ```groovy
 allprojects {
