@@ -1,7 +1,7 @@
 [![Release](https://jitpack.io/v/lovoo/tailor.svg)](https://jitpack.io/#lovoo/tailor)
 
 # tailor
-Tailor buttons to any Android EditText. Written in Kotlin.
+Tailor sews buttons on any Android EditText. Written in Kotlin.
 
 ![Demo](tailor-demo.gif)
 
