@@ -1,4 +1,4 @@
-[![Release](https://jitpack.io/v/User/Repo.svg)](https://jitpack.io/#lovoo/tailor)
+[![Release](https://jitpack.io/v/lovoo/tailor.svg)](https://jitpack.io/#lovoo/tailor)
 
 # tailor
 Tailor buttons to any Android EditText. Written in Kotlin.
