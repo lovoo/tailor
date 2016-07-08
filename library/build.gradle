@@ -1,5 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.github.dcendents.android-maven'
+
+// just for deploying to local maven repository during testing
+group = 'com.github.lovoo'
+version = 'SNAPSHOT'
+
+// this sets the artifactId - otherwise it would be "library"
+project.archivesBaseName = 'tailor'
 
 android {
     compileSdkVersion 24
@@ -28,6 +36,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
+
 buildscript {
     ext.kotlin_version = '1.0.3-eap-68'
     repositories {
@@ -38,8 +47,10 @@ buildscript {
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4'
     }
 }
+
 repositories {
     jcenter()
 }
