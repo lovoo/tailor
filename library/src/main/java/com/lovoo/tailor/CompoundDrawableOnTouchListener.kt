@@ -33,22 +33,25 @@ abstract class CompoundDrawableOnTouchListener : View.OnTouchListener {
 
             lastTouchedCompoundDrawableDirection = Direction.NO_DIRECTION
 
-            if (checkLeftTouch(v, drawables[Direction.DIRECTION_LEFT.ordinal], x)) {
+            // cache the root view so that we can retrieve it faster during the upcoming checks
+            var rootView = v.rootView
+
+            if (checkLeftTouch(v, drawables[Direction.DIRECTION_LEFT.ordinal], rootView, x)) {
                 lastTouchedCompoundDrawableDirection = Direction.DIRECTION_LEFT
                 return onDrawableTouch(event, Direction.DIRECTION_LEFT)
             }
 
-            if (checkTopTouch(v, drawables[Direction.DIRECTION_TOP.ordinal], y)) {
+            if (checkTopTouch(v, drawables[Direction.DIRECTION_TOP.ordinal], rootView, y)) {
                 lastTouchedCompoundDrawableDirection = Direction.DIRECTION_TOP
                 return onDrawableTouch(event, Direction.DIRECTION_TOP)
             }
 
-            if (checkRightTouch(v, drawables[Direction.DIRECTION_RIGHT.ordinal], x)) {
+            if (checkRightTouch(v, drawables[Direction.DIRECTION_RIGHT.ordinal], rootView, x)) {
                 lastTouchedCompoundDrawableDirection = Direction.DIRECTION_RIGHT
                 return onDrawableTouch(event, Direction.DIRECTION_RIGHT)
             }
 
-            if (checkBottomTouch(v, drawables[Direction.DIRECTION_BOTTOM.ordinal], y)) {
+            if (checkBottomTouch(v, drawables[Direction.DIRECTION_BOTTOM.ordinal], rootView, y)) {
                 lastTouchedCompoundDrawableDirection = Direction.DIRECTION_BOTTOM
                 return onDrawableTouch(event, Direction.DIRECTION_BOTTOM)
             }
@@ -76,28 +79,28 @@ abstract class CompoundDrawableOnTouchListener : View.OnTouchListener {
      */
     abstract fun onDrawableTouch(event: MotionEvent, direction: Direction): Boolean
 
-    private fun checkLeftTouch(textView: View, leftDrawable: Drawable?, rawXClickPosition: Int): Boolean {
+    private fun checkLeftTouch(textView: View, leftDrawable: Drawable?, rootView: View, rawXClickPosition: Int): Boolean {
         return leftDrawable != null
-                && rawXClickPosition <= textView.left + textView.paddingLeft + leftDrawable.bounds.width()
-                && rawXClickPosition >= textView.left
+                && rawXClickPosition <= textView.left - rootView.paddingLeft + textView.paddingLeft + leftDrawable.bounds.width()
+                && rawXClickPosition >= textView.left - rootView.paddingLeft
     }
 
-    private fun checkTopTouch(textView: View, topDrawable: Drawable?, rawYClickPosition: Int): Boolean {
+    private fun checkTopTouch(textView: View, topDrawable: Drawable?, rootView: View, rawYClickPosition: Int): Boolean {
         return topDrawable != null
-                && rawYClickPosition <= textView.top + textView.paddingTop + topDrawable.bounds.height()
-                && rawYClickPosition >= textView.top
+                && rawYClickPosition <= textView.top - rootView.paddingTop + textView.paddingTop + topDrawable.bounds.height()
+                && rawYClickPosition >= textView.top - rootView.paddingTop
     }
 
-    private fun checkRightTouch(textView: View, rightDrawable: Drawable?, rawXClickPosition: Int): Boolean {
+    private fun checkRightTouch(textView: View, rightDrawable: Drawable?, rootView: View, rawXClickPosition: Int): Boolean {
         return rightDrawable != null
-                && rawXClickPosition >= textView.right - textView.paddingRight - rightDrawable.bounds.width()
-                && rawXClickPosition <= textView.right
+                && rawXClickPosition >= textView.right + rootView.paddingRight - textView.paddingRight - rightDrawable.bounds.width()
+                && rawXClickPosition <= textView.right + rootView.paddingRight
     }
 
-    private fun checkBottomTouch(textView: View, bottomDrawable: Drawable?, rawYClickPosition: Int): Boolean {
+    private fun checkBottomTouch(textView: View, bottomDrawable: Drawable?, rootView: View, rawYClickPosition: Int): Boolean {
         return bottomDrawable != null
-                && rawYClickPosition >= textView.bottom - textView.paddingBottom - bottomDrawable.bounds.height()
-                && rawYClickPosition <= textView.bottom
+                && rawYClickPosition >= textView.bottom + rootView.paddingBottom - textView.paddingBottom - bottomDrawable.bounds.height()
+                && rawYClickPosition <= textView.bottom + rootView.paddingBottom
     }
 
 }
