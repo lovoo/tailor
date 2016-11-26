@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.widget.EditText
+import com.lovoo.tailor.CompoundDrawableOnTouchListener.Direction.*
 
 /**
  * EditText which can recognize clicks on it's compound drawables.
@@ -41,22 +42,17 @@ open class ButtonEditText : EditText {
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        if (compoundDrawableOnTouchListener == null && compoundDrawables.size > 0) {
+        if (compoundDrawableOnTouchListener == null && compoundDrawables.isNotEmpty()) {
             compoundDrawableOnTouchListener = object : CompoundDrawableOnTouchListener() {
 
-                private var mGestureDetector: GestureDetector? = null
+                private val gestureDetectors = mapOf<Direction, GestureDetector>(
+                        DIRECTION_LEFT to CompoundDrawableGestureDetector(DIRECTION_LEFT),
+                        DIRECTION_TOP to CompoundDrawableGestureDetector(DIRECTION_TOP),
+                        DIRECTION_RIGHT to CompoundDrawableGestureDetector(DIRECTION_RIGHT),
+                        DIRECTION_BOTTOM to CompoundDrawableGestureDetector(DIRECTION_BOTTOM))
 
                 override fun onDrawableTouch(event: MotionEvent, direction: CompoundDrawableOnTouchListener.Direction): Boolean {
-                    if (mGestureDetector == null) {
-                        mGestureDetector = GestureDetector(context, SingleTapConfirm(object : com.lovoo.tailor.OnClickListener {
-                            override fun onClick() {
-                                onCompoundDrawableClickListener?.onCompoundDrawableClicked(direction)
-                            }
-                        }))
-                    }
-
-                    mGestureDetector!!.onTouchEvent(event)
-
+                    gestureDetectors[direction]?.onTouchEvent(event) ?: return false
                     return true
                 }
             }
@@ -87,4 +83,11 @@ open class ButtonEditText : EditText {
          */
         fun onCompoundDrawableClicked(direction: CompoundDrawableOnTouchListener.Direction)
     }
+
+    inner class CompoundDrawableGestureDetector(direction: CompoundDrawableOnTouchListener.Direction) : GestureDetector(context, SingleTapConfirm(object : com.lovoo.tailor.OnClickListener {
+        override fun onClick() {
+            onCompoundDrawableClickListener?.onCompoundDrawableClicked(direction)
+        }
+
+    }))
 }

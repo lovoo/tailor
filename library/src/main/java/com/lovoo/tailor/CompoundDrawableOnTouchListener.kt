@@ -34,7 +34,7 @@ abstract class CompoundDrawableOnTouchListener : View.OnTouchListener {
             lastTouchedCompoundDrawableDirection = Direction.NO_DIRECTION
 
             // cache the root view so that we can retrieve it faster during the upcoming checks
-            var rootView = v.rootView
+            val rootView = v.rootView
 
             if (checkLeftTouch(v, drawables[Direction.DIRECTION_LEFT.ordinal], rootView, x)) {
                 lastTouchedCompoundDrawableDirection = Direction.DIRECTION_LEFT
