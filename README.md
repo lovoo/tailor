@@ -23,7 +23,7 @@ Then add this to you app's `build.gradle`:
 
 ```groovy
 dependencies {
-    compile 'com.github.lovoo:tailor:1.0'
+    compile 'com.github.lovoo:tailor:1.1'
 }
 ```
 
